@@ -78,9 +78,8 @@ const userController = {
       });
 
       response.json({ message: "User logged in", token });
-      response.headers.set("Access-Control-Allow-Origin", "*");
-      response.headers.append("Access-Control-Allow-Headers", "*");
-      response.headers.append("Access-Control-Allow-Methods", "*");
+      // response.headers.append("Access-Control-Allow-Headers", "*");
+      // response.headers.append("Access-Control-Allow-Methods", "*");
     } catch (error) {
       response.status(500).json({ message: error.message });
     }
