@@ -10,7 +10,6 @@ import AddProduct from "./pages/AddProduct";
 
 import AllProducts from "./pages/AllProducts";
 
-
 import Logout from "./components/Logout";
 import { loader as userLoader } from "./components/Logout";
 
@@ -59,7 +58,6 @@ const router = createBrowserRouter([
             element: <AllProducts />,
             loader: allProductsLoader,
           },
-         
         ],
       },
     ],
@@ -72,5 +70,3 @@ const App = () => {
 };
 
 export default App;
-
-
