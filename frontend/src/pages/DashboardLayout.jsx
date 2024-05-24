@@ -52,7 +52,7 @@ const DashboardLayout = () => {
                   width: "140px",
                   fontWeight: "normal",
                 }}
-                href="addProduct"
+                href="api/addProduct"
               >
                 Add Product
               </a>
