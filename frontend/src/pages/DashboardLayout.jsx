@@ -50,9 +50,9 @@ const DashboardLayout = () => {
                   padding: "6px",
                   borderRadius: "18px",
                   width: "140px",
-                  fontWeight: "normal"
+                  fontWeight: "normal",
                 }}
-                href="/dashboard/addProduct"
+                href="/addProduct"
               >
                 Add Product
               </a>
@@ -68,7 +68,7 @@ const DashboardLayout = () => {
                   width: "140px",
                   fontWeight: "normal",
                 }}
-                href="/dashboard/allProducts"
+                href="/allProducts"
               >
                 All Products
               </a>
