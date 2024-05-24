@@ -13,7 +13,7 @@ const productRouter = require("./routes/productRoutes");
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin: "https://storied-sable-0b88a3.netlify.app",
+    origin: "https://main--storied-sable-0b88a3.netlify.app",
     credentials: true,
   })
 );
