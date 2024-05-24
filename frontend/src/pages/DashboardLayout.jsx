@@ -52,7 +52,7 @@ const DashboardLayout = () => {
                   width: "140px",
                   fontWeight: "normal",
                 }}
-                href="/addProduct"
+                href="addProduct"
               >
                 Add Product
               </a>
@@ -68,7 +68,7 @@ const DashboardLayout = () => {
                   width: "140px",
                   fontWeight: "normal",
                 }}
-                href="/allProducts"
+                href="allProducts"
               >
                 All Products
               </a>
