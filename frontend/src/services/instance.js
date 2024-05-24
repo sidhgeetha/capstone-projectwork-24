@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // define the base url for the API
-const baseURL = "https://capstone-projectwork-24-1.onrender.com/api";
+const baseURL = "https://capstone-projectwork-24-4.onrender.com/api";
 
 // create an axios instance
 const instance = axios.create({
