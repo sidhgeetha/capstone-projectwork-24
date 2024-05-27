@@ -2,7 +2,7 @@ const express = require("express");
 const productRouter = express.Router();
 const productController = require("../controllers/productController");
 const auth = require("../middlewares/auth");
-const upload = require("../middlewares/upload");
+// const upload = require("../middlewares/upload");
 
 // productRouter.post("/", auth.verifyToken, productController.createProduct);
 // productRouter.post(
