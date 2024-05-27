@@ -6,3 +6,31 @@ Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+
+# front end code- Item catelog
+
+1. ront-end code using React, Axios, and React Router DOM to create a product catalog project.
+2. Folder structure 
+
+src/
+│
+├── components/
+│   ├── RegisterLogin.jsx
+│   ├── Logout.jsx
+│
+├── pages/
+│   ├── HomeLayout.jsx
+│   ├── LandingPage.jsx
+│   ├── Register.jsx
+│   ├── Login.jsx
+│   ├── DashboardLayout.jsx
+│   ├── AddProduct.jsx
+│   ├── AllProducts.jsx
+│   ├── Error.jsx
+│
+├── services/
+│   └── productServices.js
+│
+├── App.js
+└── index.js

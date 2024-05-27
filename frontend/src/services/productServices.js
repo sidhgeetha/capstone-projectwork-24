@@ -6,7 +6,7 @@ const productServices = {
     // send a GET request to the API
     return protectedInstance.get("/products");
   },
-  // define the method to get a job by its ID
+  //  get a job by its ID
   getProduct: async (id) => {
     // send a GET request to the API
     return protectedInstance.get(`/products/${id}`);
