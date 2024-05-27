@@ -7,7 +7,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const userRouter = require("./routes/userRoutes");
-const jobRouter = require("./routes/jobRoutes");
+
 const productRouter = require("./routes/productRoutes");
 
 app.use(morgan("dev"));
@@ -25,7 +25,6 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/users", userRouter);
-app.use("/api/jobs", jobRouter);
 app.use("/api/products", productRouter);
 
 module.exports = app;
