@@ -14,10 +14,8 @@ app.use(morgan("dev"));
 app.use(
   cors({
     origin: [
-      "https://main--storied-sable-0b88a3.netlify.app/",
       "https://main--storied-sable-0b88a3.netlify.app",
-      "https://capstone-projectwork-24-4.onrender.com/api",
-      "https: //capstone-projectwork-24-4.onrender.com",
+      "https://capstone-projectwork-24-4.onrender.com",
       "http://localhost:5173",
     ],
     credentials: true,
