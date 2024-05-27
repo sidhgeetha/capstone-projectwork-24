@@ -11,12 +11,18 @@ const DashboardLayout = () => {
           textAlign: "center",
           fontWeight: "bolder",
           color: "white",
-          height: "250px",
+          height: "350px",
           marginTop: "0px",
           backgroundColor: "#998671",
+          backgroundImage:
+            'url("https://img.freepik.com/free-photo/assortment-cosmetics-with-copy-space_23-2148574349.jpg")',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        
         }}
       >
-        <h1 style={{ padding: "40px" }}>
+        <h1 style={{ padding: "40px", color: "#1A0700" }}>
           Explore
           <em
             style={{
@@ -34,10 +40,11 @@ const DashboardLayout = () => {
         <nav style={{ textAlign: "center", marginBottom: "0px" }}>
           <ul
             style={{
+              color: "#1A0700",
               display: "flex",
               gap: "20px",
               listStyleType: "none",
-              margin: "20px 0 0 0",
+              margin: "100px 0 0 0",
               padding: 0,
             }}
           >
@@ -45,12 +52,14 @@ const DashboardLayout = () => {
               <a
                 className="nav-link"
                 style={{
-                  color: "black",
-                  backgroundColor: "#DED4CA",
+                  color: "white",
+
+                  backgroundColor: "#1D0B01",
                   padding: "6px",
                   borderRadius: "18px",
                   width: "140px",
                   fontWeight: "normal",
+                  marginLeft:"16px",
                 }}
                 href="/dashboard/addProduct"
               >
@@ -61,8 +70,9 @@ const DashboardLayout = () => {
               <a
                 className="nav-link"
                 style={{
-                  color: "black",
-                  backgroundColor: "#DED4CA",
+                  color: "white",
+
+                  backgroundColor: "#1D0B01",
                   padding: "6px",
                   borderRadius: "18px",
                   width: "140px",
