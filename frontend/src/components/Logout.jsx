@@ -55,7 +55,7 @@ const Logout = () => {
         </p>
         <button
           style={{
-            color: "black",
+            color: "white",
             backgroundColor: "#DED4CA",
             padding: "6px",
             borderRadius: "18px",
