@@ -5,7 +5,7 @@ const LandingPage = () => {
   return (
     <div>
       
-      <p>Welcome!</p>
+      <p>Online shopping store!</p>
       <p>Register and login ! </p>
 
       <Outlet />

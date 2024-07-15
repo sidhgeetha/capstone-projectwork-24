@@ -1,3 +1,5 @@
+import { ToastContainer } from "react-toastify";
+
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomeLayout from "./pages/HomeLayout";
 import LandingPage from "./pages/LandingPage";
@@ -18,43 +20,32 @@ import { loader as allProductsLoader } from "./pages/AllProducts";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage />,
-    children: [
-      {
-        index: true,
-        element: <RegisterLogin />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-    ],
-    errorElement: <Error />,
+
+    element: <RegisterLogin />,
   },
   {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+
+  {
     path: "/dashboard",
-    element: <Logout />,
-    loader: userLoader,
+    element: <DashboardLayout />,
+    loader: allProductsLoader,
     children: [
       {
-        path: "",
-        element: <DashboardLayout />,
-        children: [
-          {
-            path: "addProduct",
-            element: <AddProduct />,
-          },
+        path: "addProduct",
+        element: <AddProduct />,
+      },
 
-          {
-            path: "allProducts",
-            element: <AllProducts />,
-            loader: allProductsLoader,
-          },
-        ],
+      {
+        path: "allProducts",
+        element: <AllProducts />,
+        loader: allProductsLoader,
       },
     ],
     errorElement: <Error />,
@@ -62,7 +53,12 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <div>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </div>
+  );
 };
 
 export default App;

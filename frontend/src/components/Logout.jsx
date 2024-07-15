@@ -1,5 +1,7 @@
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import userServices from "../services/userServices";
+import {Button,} from "@chakra-ui/react";
+
 
 export async function loader() {
   // get the currently logged in user
@@ -34,7 +36,7 @@ const Logout = () => {
     <div>
       <div
         style={{
-          backgroundColor: "#DBD1C7",
+          backgroundColor: "teal",
           height: "14vh",
           display: "flex",
           flexDirection: "row",
@@ -53,22 +55,10 @@ const Logout = () => {
         >
           Welcome {user ? user.data.user.name : "Guest"}!
         </p>
-        <button
-          style={{
-            color: "white",
-            backgroundColor: "#DED4CA",
-            padding: "6px",
-            borderRadius: "18px",
-            width: "140px",
-            borderWidth:"1px",
-            fontWeight: "normal",
 
-            background: "#1D0B01",
-          }}
-          onClick={handleLogout}
-        >
-          Log Out
-        </button>
+        <Button onClick={handleLogout} colorScheme="teal" variant="solid">
+          Log out
+        </Button>
       </div>
       <div>
         <Outlet />

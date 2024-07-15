@@ -1,96 +1,119 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { Link as ReactRouterLink } from "react-router-dom";
+import { Button } from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  Stack,
+  Heading,
+  Divider,
+  ButtonGroup,
+  Image,
+  Text,
+  SimpleGrid,
+  Spacer,
+  Box,
+  Flex,
+} from "@chakra-ui/react";
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab as ChakraLink,
+  TabPanel,
+} from "@chakra-ui/react";
+// import AddProduct from "./AddProduct";
+
+import productServices from "../services/productServices"; // Adjust the import path as needed
+import NavBar from "../components/NavBar";
 
 const DashboardLayout = () => {
+  const [basket, setBasket] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
+  const [status, setStatus] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await productServices.getAllProducts();
+        setProducts(response.data.product);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const addCart = (index) => {
+    setCartCount(cartCount + 1);
+    setBasket(basket + 1); // Update basket count
+    setStatus(status.map((s, i) => (i === index ? false : s)));
+  };
+
   return (
     <div>
-      <div
-        style={{
-          flex: 1,
-          fontStyle: "initial",
-          textAlign: "center",
-          fontWeight: "bolder",
-          color: "white",
-          height: "350px",
-          marginTop: "0px",
-          backgroundColor: "#998671",
-          backgroundImage:
-            'url("https://img.freepik.com/free-photo/assortment-cosmetics-with-copy-space_23-2148574349.jpg")',
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        
-        }}
-      >
-        <h1 style={{ padding: "40px", color: "#1A0700" }}>
-          Explore
-          <em
-            style={{
-              color: "#1A0700",
-              fontWeight: "bold",
-              fontSize: "70px",
-              marginRight: "10px",
-              marginLeft: "18px",
-            }}
-          >
-            BEAUTY
-          </em>{" "}
-          Products
-        </h1>
-        <nav style={{ textAlign: "center", marginBottom: "0px" }}>
-          <ul
-            style={{
-              color: "#1A0700",
-              display: "flex",
-              gap: "20px",
-              listStyleType: "none",
-              margin: "100px 0 0 0",
-              padding: 0,
-            }}
-          >
-            <li>
-              <a
-                className="nav-link"
-                style={{
-                  color: "white",
-
-                  backgroundColor: "#1D0B01",
-                  padding: "6px",
-                  borderRadius: "18px",
-                  width: "140px",
-                  fontWeight: "normal",
-                  marginLeft:"16px",
-                }}
-                href="/dashboard/addProduct"
+      <NavBar basket={basket} />
+      <Spacer />
+      <Tabs>
+        <TabList>
+          <ChakraLink as={ReactRouterLink} to="/dashboard">
+            Home
+          </ChakraLink>
+          <ChakraLink as={ReactRouterLink} to="/dashboard/addProduct">
+            Add Product
+          </ChakraLink>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <div>
+              <SimpleGrid
+                spacing={4}
+                templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
               >
-                Add Product
-              </a>
-            </li>
-            <li>
-              <a
-                className="nav-link"
-                style={{
-                  color: "white",
-
-                  backgroundColor: "#1D0B01",
-                  padding: "6px",
-                  borderRadius: "18px",
-                  width: "140px",
-                  fontWeight: "normal",
-                }}
-                href="/dashboard/allProducts"
-              >
-                All Products
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <div>
-        <div style={{ marginLeft: "50px", flex: 1 }}>
-          <Outlet />
-        </div>
-      </div>
+                {products.map((product, index) => (
+                  <div className="col" key={product._id}>
+                    <Card maxW="sm" borderRadius="0px">
+                      <CardBody minHeight="300px">
+                        <Image src={product.product_image} borderRadius="0px" />
+                        <Stack mt="6" spacing="3">
+                          <Flex>
+                            <Box p="2">
+                              <Heading size="md">
+                                {product.product_name}
+                              </Heading>
+                            </Box>
+                            <Spacer />
+                            <Box p="2">
+                              <Text color="teal.600" fontSize="1xl">
+                                ${product.product_price}
+                              </Text>
+                            </Box>
+                          </Flex>
+                          <Text>{product.product_description}</Text>
+                        </Stack>
+                      </CardBody>
+                      {/* <CardFooter>
+                        <ButtonGroup spacing="0"> */}
+                      <Button onClick={() => addCart(index)} colorScheme="teal">
+                        Add to cart
+                      </Button>
+                      {/* </ButtonGroup>
+                      </CardFooter> */}
+                    </Card>
+                  </div>
+                ))}
+              </SimpleGrid>
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <Outlet />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </div>
   );
 };
