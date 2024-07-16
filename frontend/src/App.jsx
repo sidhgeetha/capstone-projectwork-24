@@ -1,8 +1,6 @@
+import React from "react";
 import { ToastContainer } from "react-toastify";
-
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import HomeLayout from "./pages/HomeLayout";
-import LandingPage from "./pages/LandingPage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import RegisterLogin from "./components/RegisterLogin";
@@ -10,17 +8,13 @@ import Error from "./pages/Error";
 import DashboardLayout from "./pages/DashboardLayout";
 import AddProduct from "./pages/AddProduct";
 
-import AllProducts from "./pages/AllProducts";
-
-import Logout from "./components/Logout";
-import { loader as userLoader } from "./components/Logout";
+import AboutUs from "./pages/AboutUs";
 
 import { loader as allProductsLoader } from "./pages/AllProducts";
 
 const router = createBrowserRouter([
   {
     path: "/",
-
     element: <RegisterLogin />,
   },
   {
@@ -31,7 +25,6 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
-
   {
     path: "/dashboard",
     element: <DashboardLayout />,
@@ -41,11 +34,9 @@ const router = createBrowserRouter([
         path: "addProduct",
         element: <AddProduct />,
       },
-
       {
-        path: "allProducts",
-        element: <AllProducts />,
-        loader: allProductsLoader,
+        path: "aboutUs",
+        element: <AboutUs />,
       },
     ],
     errorElement: <Error />,
