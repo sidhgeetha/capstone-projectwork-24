@@ -1,6 +1,8 @@
-import React from "react";
-import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 
+
+
+import React from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -10,26 +12,37 @@ import {
   Highlight,
   Text,
   Badge,
-  Heading,
   Icon,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { FaShoppingCart, FaUser, FaSearch } from "react-icons/fa";
+import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-
 import userServices from "../services/userServices";
 
 export async function loader() {
-  // Get the currently logged-in user
   const user = await userServices.getUser();
-  // Return the user
   return { user };
 }
 
-const NavBar = ({ basket, onSearch }) => {
+const NavBar = ({
+  basket,
+  onSearch,
+  products = [],
+  addToCart,
+  removeFromCart,
+}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   const { user } = useLoaderData();
 
@@ -44,6 +57,11 @@ const NavBar = ({ basket, onSearch }) => {
         console.log(error);
       });
   };
+
+  const total = products.reduce(
+    (acc, product) => acc + product.product_price * product.quantity,
+    0
+  );
 
   return (
     <div style={{ padding: "24px" }}>
@@ -62,19 +80,22 @@ const NavBar = ({ basket, onSearch }) => {
 
           <Spacer />
 
-          <Spacer />
-
           <Stack direction="row" spacing="4" align="center">
-            <Box color="black" ml="30px" display="flex" alignItems="center">
+            <Box
+              color="black"
+              ml="30px"
+              display="flex"
+              alignItems="center"
+              onClick={onOpen}
+            >
               <Icon as={FaShoppingCart} w={6} h={6} />
-
               <Badge ml="2" colorScheme="teal" fontSize="1em">
                 {basket}
               </Badge>
             </Box>
 
             <Menu>
-              <MenuButton colorScheme="green" rightIcon={<ChevronDownIcon />}>
+              <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                 <Icon ml="12px" as={FaUser} w={6} h={6} />
               </MenuButton>
               <MenuList>
@@ -84,6 +105,47 @@ const NavBar = ({ basket, onSearch }) => {
           </Stack>
         </Flex>
       </Box>
+
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Shopping Cart</DrawerHeader>
+
+          <DrawerBody>
+            {products.length > 0 ? (
+              products.map((product, index) => (
+                <Box key={product._id} mb="4">
+                  <Flex justify="space-between">
+                    <Text>{product.product_name}</Text>
+                    <Text>${product.product_price}</Text>
+                  </Flex>
+                  <Flex justify="space-between">
+                    <Button size="sm" onClick={() => removeFromCart(index)}>
+                      -
+                    </Button>
+                    <Text>{product.quantity}</Text>
+                    <Button size="sm" onClick={() => addToCart(index)}>
+                      +
+                    </Button>
+                  </Flex>
+                </Box>
+              ))
+            ) : (
+              <Text>No items in the cart.</Text>
+            )}
+          </DrawerBody>
+
+          <DrawerFooter>
+            <Flex justify="space-between" width="100%">
+              <Text>Total: ${total.toFixed(2)}</Text>
+              <Button colorScheme="teal" onClick={onClose}>
+                Checkout
+              </Button>
+            </Flex>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 };
