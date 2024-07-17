@@ -88,7 +88,7 @@ const AddProduct = () => {
                     type="text"
                     id="product_name"
                     placeholder="name..."
-                    isInvalid={!errors.product_name}
+                    isinvalid={!errors.product_name}
                   />
                   {errors.product_name && (
                     <p style={{ color: "red", fontSize: "12px" }}>
@@ -133,3 +133,4 @@ const AddProduct = () => {
 };
 
 export default AddProduct;
+

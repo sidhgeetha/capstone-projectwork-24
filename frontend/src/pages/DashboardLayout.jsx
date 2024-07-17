@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect } from "react";
 import { Outlet, Link as ReactRouterLink } from "react-router-dom";
 import {
@@ -6,12 +8,16 @@ import {
   Spacer,
   Stack,
   Button,
+  Highlight,
   Text,
+  Badge,
   Heading,
+  Icon,
   Tabs,
+  Tab,
   TabList,
   TabPanels,
-  Tab,
+  Tab as ChakraLink,
   TabPanel,
   SimpleGrid,
   Card,
@@ -25,15 +31,19 @@ import NavBar from "../components/NavBar";
 const DashboardLayout = () => {
   const [basket, setBasket] = useState(0);
   const [products, setProducts] = useState([]);
-
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [status, setStatus] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await productServices.getAllProducts();
-        setProducts(response.data.product);
-        setFilteredProducts(response.data.product);
+        const productsWithQuantity = response.data.product.map((product) => ({
+          ...product,
+          quantity: 0,
+        }));
+        setProducts(productsWithQuantity);
+        setFilteredProducts(productsWithQuantity);
       } catch (error) {
         console.error("Failed to fetch products:", error);
       }
@@ -42,32 +52,32 @@ const DashboardLayout = () => {
     fetchProducts();
   }, []);
 
-  const addCart = (index) => {
+  const addToCart = (index) => {
+    const updatedProducts = [...products];
+    updatedProducts[index].quantity += 1;
+    setProducts(updatedProducts);
     setBasket(basket + 1);
-    setBasket(basket + 1);
-    setStatus(status.map((s, i) => (i === index ? false : s)));
   };
 
-  // Check if the current path is one of the child routes
-  // const isChildRoute = location.pathname !== "/dashboard";
-
-  // Determine the active tab index based on the current URL
-  const getTabIndex = () => {
-    switch (location.pathname) {
-      case "/dashboard":
-        return 0;
-      case "/dashboard/addProduct":
-        return 1;
-      default:
-        return 0;
+  const removeFromCart = (index) => {
+    const updatedProducts = [...products];
+    if (updatedProducts[index].quantity > 0) {
+      updatedProducts[index].quantity -= 1;
+      setProducts(updatedProducts);
+      setBasket(basket - 1);
     }
   };
 
   return (
     <div>
-      <NavBar basket={basket} />
+      <NavBar
+        basket={basket}
+        products={products.filter((product) => product.quantity > 0)}
+        addToCart={addToCart}
+        removeFromCart={removeFromCart}
+      />
 
-      <Tabs index={getTabIndex()}>
+      <Tabs>
         <TabList>
           <Tab as={ReactRouterLink} to="/dashboard">
             HOME
@@ -76,45 +86,57 @@ const DashboardLayout = () => {
             ADD PRODUCT
           </Tab>
         </TabList>
+          
+      
+           
+       
+      
         <TabPanels>
           <TabPanel>
-            {/* {!isChildRoute && ( */}
-            <SimpleGrid
-              spacing={4}
-              templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
-            >
-              {products.map((product, index) => (
-                <div className="col" key={product._id}>
-                  <Card maxW="sm" borderRadius="0px">
-                    <CardBody minHeight="300px">
-                      <Image src={product.product_image} borderRadius="0px" />
-                      <Stack mt="6" spacing="3">
-                        <Flex>
-                          <Box p="2">
-                            <Heading size="md">{product.product_name}</Heading>
-                          </Box>
-                          <Spacer />
-                          <Box p="2">
-                            <Text color="teal.600" fontSize="1xl">
-                              ${product.product_price}
-                            </Text>
-                          </Box>
-                        </Flex>
-                        <Text>{product.product_description}</Text>
-                      </Stack>
-                    </CardBody>
-                    <Button
-                      onClick={() => addCart(index)}
-                      colorScheme="teal"
-                      borderRadius="0px"
-                    >
-                      Add to cart
-                    </Button>
-                  </Card>
-                </div>
-              ))}
-            </SimpleGrid>
-            {/* )} */}
+            <div>
+              <SimpleGrid
+                spacing={4}
+                templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+              >
+                {filteredProducts.map((product, index) => (
+                  <div className="col" key={product._id}>
+                    <Card maxW="sm" borderRadius="0px">
+                      <CardBody minHeight="300px">
+                        <Image src={product.product_image} borderRadius="0px" />
+                        <Stack mt="6" spacing="3">
+                          <Flex>
+                            <Box p="2">
+                              <Heading size="md">
+                                {product.product_name}
+                              </Heading>
+                            </Box>
+                            <Spacer />
+                            <Box p="2">
+                              <Text color="teal.600" fontSize="1xl">
+                                ${product.product_price}
+                              </Text>
+                            </Box>
+                          </Flex>
+                   
+                        </Stack>
+                      </CardBody>
+                      <Button
+                        onClick={() => addToCart(index)}
+                        colorScheme="teal"
+                        borderRadius="0px"
+                      >
+                        Add to cart
+                      </Button>
+                    </Card>
+                  </div>
+                ))}
+              </SimpleGrid>
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <Outlet />
+          </TabPanel>
+          <TabPanel>
             <Outlet />
           </TabPanel>
           <TabPanel>
