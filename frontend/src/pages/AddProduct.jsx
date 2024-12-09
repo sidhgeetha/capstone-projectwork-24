@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 
+
 const AddProduct = () => {
   const [errors, setErrors] = useState({ product_name: "" });
   const [value, setValue] = useState("");

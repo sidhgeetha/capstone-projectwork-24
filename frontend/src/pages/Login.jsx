@@ -125,9 +125,12 @@ const Login = () => {
                 <Input
                   variant="filled"
                   placeholder="Email"
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   isInvalid={!!errors.email}
+                  autoComplete="email"
+                  required
                 />
                 {errors.email && (
                   <p style={{ color: "red", fontSize: "12px" }}>
@@ -142,8 +145,11 @@ const Login = () => {
                   placeholder="Password"
                   type="password"
                   value={password}
+                  // autoComplete="new-password"
                   onChange={(e) => setPassword(e.target.value)}
                   isInvalid={!!errors.password}
+                  autoComplete="current-password"
+                  required
                 />
                 {errors.password && (
                   <p style={{ color: "red", fontSize: "12px" }}>

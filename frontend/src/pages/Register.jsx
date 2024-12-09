@@ -154,6 +154,7 @@ const Register = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   isInvalid={!!errors.email}
+                  autoComplete="username"
                 />
                 {errors.email && (
                   <p style={{ color: "red", fontSize: "12px" }}>
@@ -170,6 +171,7 @@ const Register = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   isInvalid={!!errors.password}
+                  autoComplete="current-password"
                 />
                 {errors.password && (
                   <p style={{ color: "red", fontSize: "12px" }}>
