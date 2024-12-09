@@ -16,7 +16,7 @@ app.use(
     origin: [
       "https://main--storied-sable-0b88a3.netlify.app",
       "https://capstone-projectwork-24-4.onrender.com",
-      "http://localhost:5173",
+      "http://localhost:5173/",
     ],
     credentials: true,
   })
