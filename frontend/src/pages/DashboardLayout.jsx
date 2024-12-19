@@ -151,16 +151,198 @@
 // export default DashboardLayout;
 
 
+// import React, { useState, useEffect } from "react";
+// import { Outlet, Link as ReactRouterLink } from "react-router-dom";
+// import {
+//   Box,
+//   Flex,
+//   Spacer,
+//   Stack,
+//   Button,
+//   Text,
+//   Heading,
+//   Tabs,
+//   Tab,
+//   TabList,
+//   TabPanels,
+//   TabPanel,
+//   SimpleGrid,
+//   Card,
+//   CardBody,
+//   Image,
+// } from "@chakra-ui/react";
+// import productServices from "../services/productServices";
+// import NavBar from "../components/NavBar";
+// import Pagination from "./Pagination";
+
+// const DashboardLayout = () => {
+//   const [basket, setBasket] = useState(0);
+//   const [products, setProducts] = useState([]);
+  
+//   const [filteredProducts, setFilteredProducts] = useState([]);
+//   const [currentPage, setCurrentPage] = useState(1);
+//    const [searchQuery, setSearchQuery] = useState(""); 
+//   const itemsPerPage = 4;
+
+//   useEffect(() => {
+//     const fetchProducts = async () => {
+//       try {
+//         const response = await productServices.getAllProducts();
+//         const productsWithQuantity = response.data.product.map((product) => ({
+//           ...product,
+//           quantity: 0, 
+//         }));
+//         setProducts(productsWithQuantity);
+//         setFilteredProducts(productsWithQuantity);
+//       } catch (error) {
+//         console.error("Failed to fetch products:", error);
+//       }
+//     };
+
+//     fetchProducts();
+//   }, []);
+
+//   useEffect(() => {
+//     // Filter products based on search query
+//     const filtered = products.filter((product) =>
+//       product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
+//     );
+//     setFilteredProducts(filtered);
+//   }, [searchQuery, products]);
+
+//   const totalItems = filteredProducts.length;
+//   const totalPages = Math.ceil(totalItems / itemsPerPage);
+//   const startIndex = (currentPage - 1) * itemsPerPage;
+//   const endIndex = startIndex + itemsPerPage;
+//   const productsToShow = filteredProducts.slice(startIndex, endIndex);
+
+  
+//   const addToCart = (productId) => {
+//     const updatedProducts = products.map((product) =>
+//       product._id === productId
+//         ? { ...product, quantity: product.quantity + 1 }
+//         : product
+//     );
+//     setProducts(updatedProducts);
+
+//     // Recalculate the total basket count
+//     const newBasketCount = updatedProducts.reduce(
+//       (acc, product) => acc + product.quantity,
+//       0
+//     );
+//     setBasket(newBasketCount);
+//   };
+
+//   const removeFromCart = (productId) => {
+//     const updatedProducts = products.map((product) =>
+//       product._id === productId ? { ...product, quantity: 0 } : product
+//     );
+//     setProducts(updatedProducts);
+
+//     const newBasketCount = updatedProducts.reduce(
+//       (acc, product) => acc + product.quantity,
+//       0
+//     );
+//     setBasket(newBasketCount);
+//   };
+
+//   return (
+//     <div>
+//       <NavBar
+//         basket={basket}
+//         products={products.filter((product) => product.quantity > 0)}
+//         setFilteredProducts={setFilteredProducts}
+//         filteredProducts={filteredProducts}
+//         addToCart={addToCart}
+//         setBasket={setBasket}
+//         removeFromCart={removeFromCart}
+//         setProducts={setProducts}
+//         searchQuery={searchQuery}
+//         setSearchQuery={setSearchQuery}
+//       />
+
+//       <Tabs>
+//         <TabList>
+//           <Tab as={ReactRouterLink} to="/dashboard">
+//             HOME
+//           </Tab>
+//           <Tab as={ReactRouterLink} to="/dashboard/addProduct">
+//             ADD PRODUCT
+//           </Tab>
+//         </TabList>
+
+//         <TabPanels>
+//           <TabPanel>
+//             <div>
+//               <SimpleGrid
+//                 spacing={4}
+//                 templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+//               >
+//                 {productsToShow.map((product) => (
+//                   <div className="col" key={product._id}>
+//                     <Card maxW="sm" borderRadius="0px">
+//                       <CardBody minHeight="300px">
+//                         <Image src={product.product_image} borderRadius="0px" />
+//                         <Stack mt="6" spacing="3">
+//                           <Flex>
+//                             <Box p="2">
+//                               <Heading size="md">
+//                                 {product.product_name}
+//                               </Heading>
+//                             </Box>
+//                             <Spacer />
+//                             <Box p="2">
+//                               <Text color="teal.600" fontSize="1xl">
+//                                 ${product.product_price}
+//                               </Text>
+//                             </Box>
+//                           </Flex>
+//                         </Stack>
+//                       </CardBody>
+//                       <Button
+//                         onClick={() => addToCart(product._id)}
+//                         colorScheme="teal"
+//                         borderRadius="0px"
+//                       >
+//                         Add to cart
+//                       </Button>
+//                       {product.quantity > 0 && (
+//                         <Button
+//                           onClick={() => removeFromCart(product._id)}
+//                           colorScheme="red"
+//                           borderRadius="0px"
+//                           mt={2}
+//                         >
+//                           Remove from cart
+//                         </Button>
+//                       )}
+//                     </Card>
+//                   </div>
+//                 ))}
+//               </SimpleGrid>
+//               <Pagination
+//                 currentPage={currentPage}
+//                 totalPages={totalPages}
+//                 onPageChange={(page) => setCurrentPage(page)}
+//               />
+//             </div>
+//           </TabPanel>
+//           <TabPanel>
+//             <Outlet />
+//           </TabPanel>
+//         </TabPanels>
+//       </Tabs>
+//     </div>
+//   );
+// };
+
+// export default DashboardLayout;
+
+
 import React, { useState, useEffect } from "react";
 import { Outlet, Link as ReactRouterLink } from "react-router-dom";
 import {
   Box,
-  Flex,
-  Spacer,
-  Stack,
-  Button,
-  Text,
-  Heading,
   Tabs,
   Tab,
   TabList,
@@ -170,6 +352,12 @@ import {
   Card,
   CardBody,
   Image,
+  Button,
+  Stack,
+  Flex,
+  Spacer,
+  Heading,
+  Text,
 } from "@chakra-ui/react";
 import productServices from "../services/productServices";
 import NavBar from "../components/NavBar";
@@ -178,7 +366,7 @@ import Pagination from "./Pagination";
 const DashboardLayout = () => {
   const [basket, setBasket] = useState(0);
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
@@ -188,10 +376,9 @@ const DashboardLayout = () => {
         const response = await productServices.getAllProducts();
         const productsWithQuantity = response.data.product.map((product) => ({
           ...product,
-          quantity: 0, // Initialize product quantity as 0
+          quantity: 0,
         }));
         setProducts(productsWithQuantity);
-        setFilteredProducts(productsWithQuantity);
       } catch (error) {
         console.error("Failed to fetch products:", error);
       }
@@ -200,14 +387,16 @@ const DashboardLayout = () => {
     fetchProducts();
   }, []);
 
-  // Calculate pagination
+  const filteredProducts = products.filter((product) =>
+    product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const totalItems = filteredProducts.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const productsToShow = filteredProducts.slice(startIndex, endIndex);
 
-  // Function to add product to cart
   const addToCart = (productId) => {
     const updatedProducts = products.map((product) =>
       product._id === productId
@@ -216,7 +405,6 @@ const DashboardLayout = () => {
     );
     setProducts(updatedProducts);
 
-    // Recalculate the total basket count
     const newBasketCount = updatedProducts.reduce(
       (acc, product) => acc + product.quantity,
       0
@@ -242,10 +430,11 @@ const DashboardLayout = () => {
       <NavBar
         basket={basket}
         products={products.filter((product) => product.quantity > 0)}
-        addToCart={addToCart}
         setBasket={setBasket}
         removeFromCart={removeFromCart}
         setProducts={setProducts}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
       />
 
       <Tabs>
@@ -260,59 +449,53 @@ const DashboardLayout = () => {
 
         <TabPanels>
           <TabPanel>
-            <div>
-              <SimpleGrid
-                spacing={4}
-                templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
-              >
-                {productsToShow.map((product) => (
-                  <div className="col" key={product._id}>
-                    <Card maxW="sm" borderRadius="0px">
-                      <CardBody minHeight="300px">
-                        <Image src={product.product_image} borderRadius="0px" />
-                        <Stack mt="6" spacing="3">
-                          <Flex>
-                            <Box p="2">
-                              <Heading size="md">
-                                {product.product_name}
-                              </Heading>
-                            </Box>
-                            <Spacer />
-                            <Box p="2">
-                              <Text color="teal.600" fontSize="1xl">
-                                ${product.product_price}
-                              </Text>
-                            </Box>
-                          </Flex>
-                        </Stack>
-                      </CardBody>
-                      <Button
-                        onClick={() => addToCart(product._id)}
-                        colorScheme="teal"
-                        borderRadius="0px"
-                      >
-                        Add to cart
-                      </Button>
-                      {product.quantity > 0 && (
-                        <Button
-                          onClick={() => removeFromCart(product._id)}
-                          colorScheme="red"
-                          borderRadius="0px"
-                          mt={2}
-                        >
-                          Remove from cart
-                        </Button>
-                      )}
-                    </Card>
-                  </div>
-                ))}
-              </SimpleGrid>
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={(page) => setCurrentPage(page)}
-              />
-            </div>
+            <SimpleGrid
+              spacing={4}
+              templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+            >
+              {productsToShow.map((product) => (
+                <Card key={product._id} maxW="sm" borderRadius="0px">
+                  <CardBody minHeight="300px">
+                    <Image src={product.product_image} borderRadius="0px" />
+                    <Stack mt="6" spacing="3">
+                      <Flex>
+                        <Box p="2">
+                          <Heading size="md">{product.product_name}</Heading>
+                        </Box>
+                        <Spacer />
+                        <Box p="2">
+                          <Text color="teal.600" fontSize="1xl">
+                            ${product.product_price}
+                          </Text>
+                        </Box>
+                      </Flex>
+                    </Stack>
+                  </CardBody>
+                  <Button
+                    onClick={() => addToCart(product._id)}
+                    colorScheme="teal"
+                    borderRadius="0px"
+                  >
+                    Add to cart
+                  </Button>
+                  {product.quantity > 0 && (
+                    <Button
+                      onClick={() => removeFromCart(product._id)}
+                      colorScheme="red"
+                      borderRadius="0px"
+                      mt={2}
+                    >
+                      Remove from cart
+                    </Button>
+                  )}
+                </Card>
+              ))}
+            </SimpleGrid>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
           </TabPanel>
           <TabPanel>
             <Outlet />
@@ -324,4 +507,3 @@ const DashboardLayout = () => {
 };
 
 export default DashboardLayout;
-
