@@ -387,8 +387,11 @@ const DashboardLayout = () => {
     fetchProducts();
   }, []);
 
-  const filteredProducts = products.filter((product) =>
-    product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredProducts = products.filter(
+    (product) =>
+      // product.product_name.toLowerCase().includes(searchQuery.toLowerCase())
+      product.product_name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      product.quantity === 0
   );
 
   const totalItems = filteredProducts.length;
