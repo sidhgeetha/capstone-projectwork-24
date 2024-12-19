@@ -8,7 +8,7 @@ import Error from "./pages/Error";
 import DashboardLayout from "./pages/DashboardLayout";
 import AddProduct from "./pages/AddProduct";
 
-import AboutUs from "./pages/AboutUs";
+
 
 import { loader as allProductsLoader } from "./pages/AllProducts";
 
